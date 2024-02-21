@@ -34,20 +34,6 @@ const initialItems = [
     type: "drink",
   },
 ];
-const selectedInitialItems = [
-  {
-    id: 1,
-    itemName: "Banana",
-    price: 7,
-    type: "food",
-  },
-  {
-    id: 2,
-    itemName: "Apple",
-    price: 20,
-    type: "food",
-  },
-];
 
 export default function App() {
   // const [test, setTest] = useState("test");
@@ -57,7 +43,7 @@ export default function App() {
   const [quantity, setQuantity] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const [editItem, setEditItem] = useState(null);
+  //const [editItem, setEditItem] = useState(null);
 
   function handleSearch(e) {
     e.preventDefault();
@@ -90,6 +76,7 @@ export default function App() {
         item.id === updatedItem.id ? { ...item, updatedItem } : item,
       ),
     );
+    console.log(updatedItem);
   }
 
   function handleDeleteItem(id) {
@@ -190,6 +177,7 @@ function AddNewItem({ searchTerm }) {
 
 function SelectedItemList({
   selectedItem,
+  onUpdateItem,
   onAdd,
   onSubtract,
   quantity,
@@ -220,7 +208,7 @@ function SelectedItemList({
         <thead>
           <th>ItemName</th>
           <th>Type</th>
-          <th colspan="3">setQuantity</th>
+          <th colSpan="3">setQuantity</th>
         </thead>
         <tbody>
           <tr>
@@ -245,9 +233,15 @@ function SelectedItemList({
             </td>
           </tr>
           <tr>
-            <td colspan="5">
+            <td colSpan="5">
               <button className="add-to-bill-btn" onClick={handleSubmit}>
                 AddToBill
+              </button>
+              <button
+                className="add-to-bill-btn"
+                onClick={() => onUpdateItem(selectedItem)}
+              >
+                update
               </button>
             </td>
           </tr>
