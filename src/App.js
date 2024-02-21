@@ -73,7 +73,9 @@ export default function App() {
   function handleUpdateItem(updatedItem) {
     setBillItem((prevBillItem) =>
       prevBillItem.map((item) =>
-        item.id === updatedItem.id ? { ...item, updatedItem } : item,
+        item.id === updatedItem.id
+          ? { ...item, quantity: updatedItem.quantity }
+          : item,
       ),
     );
     console.log(updatedItem);
@@ -321,15 +323,27 @@ function BillItems({
   );
 }
 
-function BillItem({ item, onDeleteItem, onSelection, selectedItem }) {
+function BillItem({ item, onDeleteItem, onSelection, onUpdateItem }) {
   const itemPrice = item.price * item.quantity;
 
   return (
     <>
       <tbody>
-        <tr className="invoice-item-row" onClick={() => onSelection(item)}>
+        {/* <tr className="invoice-item-row" onClick={() => onSelection(item)}> */}
+        <tr className="invoice-item-row">
           <td>{item.itemName}</td>
-          <td>{item.quantity}</td>
+          <td>
+            <input
+              type="number"
+              min={1}
+              maxLength="3"
+              size="7"
+              value={item.quantity}
+              onChange={(e) =>
+                onUpdateItem({ ...item, quantity: parseInt(e.target.value) })
+              }
+            ></input>
+          </td>
           <td>{itemPrice}</td>
           <td>
             <button
