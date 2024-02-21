@@ -1,0 +1,217 @@
+import { useState } from "react";
+import "./style.css";
+
+const initialItems = [
+  {
+    id: 1,
+    itemName: "Banana",
+    price: 7,
+    type: "food",
+  },
+  {
+    id: 2,
+    itemName: "Apple",
+    price: 20,
+    type: "food",
+  },
+  {
+    id: 3,
+    itemName: "Orange",
+    price: 4,
+    type: "food",
+  },
+  {
+    id: 4,
+    itemName: "Pear",
+    price: 4,
+    type: "food",
+  },
+  {
+    id: 5,
+    itemName: "Espresso",
+    price: 4,
+    type: "drink",
+  },
+];
+
+const selectedInitialItems = [
+  {
+    id: 1,
+    itemName: "Banana",
+    price: 7,
+    type: "food",
+  },
+  {
+    id: 2,
+    itemName: "Apple",
+    price: 20,
+    type: "food",
+  },
+];
+
+//Reusable Component
+function Button({ onClick, children }) {
+  // return <button className="button" onClick={onHandleShowAddFriend}>{children}</button>
+  return (
+    <button className="button" onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+export default function App() {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedList, setSelectedList] = useState(selectedInitialItems);
+
+  const items = initialItems;
+  const selectedItems = selectedInitialItems;
+
+  function handleItem(itemObj) {
+    setSelectedItem(itemObj);
+    console.log(itemObj);
+  }
+
+  function handleAddItem(itemObj) {
+    setSelectedList((items) => [...items, itemObj]);
+    //setShowAddFriend(false);
+  }
+
+  return (
+    <div>
+      <Header />
+
+      <Client />
+      <Tab items={items} onHandleItem={handleItem} />
+
+      <Bill items={selectedItems} onhandleAddItem={handleAddItem} />
+      <Footer />
+    </div>
+  );
+}
+
+function Header() {
+  return (
+    <div>
+      <h1>CashRegister</h1>
+    </div>
+  );
+}
+function Client() {
+  const [customerName, setCustomerName] = useState("");
+  const [customerAddress, setCustomerAddress] = useState("");
+
+  return (
+    <div>
+      <div className="clientInfo ">
+        <h2>CustomerInfo</h2>
+        <div className="myRow">
+          <div className="myGrid">
+            <p>CustomerName</p>
+            <p>CustomerAddress</p>
+          </div>
+          <div className="myGrid">
+            <input
+              placeholder="customerName"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+            />
+            <input
+              placeholder="customerAddress"
+              value={customerAddress}
+              onChange={(e) => setCustomerAddress(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="clientInfo">
+        <h3>{customerName}</h3>
+        <h4>{customerAddress}</h4>
+      </div>
+    </div>
+  );
+}
+
+function Tab({ items, onHandleItem }) {
+  return (
+    <div>
+      <div className="search">
+        <input type="text" placeholder="searchItem"></input>
+      </div>
+      <div className="tab">
+        <button>Food</button>
+        <button>Drink</button>
+      </div>
+      <div className="tab-container">
+        <ul>
+          {items.map((eachItem) => (
+            <Item
+              item={eachItem}
+              key={eachItem.id}
+              onHandleItem={onHandleItem}
+            />
+          ))}
+        </ul>
+        <ul></ul>
+      </div>
+    </div>
+  );
+}
+
+function Item({ item, onHandleItem }) {
+  return (
+    <>
+      <li className="tab-item" onClick={() => onHandleItem(item)}>
+        <h2>{item.itemName}</h2>
+        <p>price: {item.price}€</p>
+      </li>
+    </>
+  );
+}
+
+function Bill() {
+  return (
+    <div>
+      <div className="bill">
+        <ul>
+          <li className="items">
+            <p className="item-name">Banana</p>
+            <p className="item-quantitiy">
+              <button>-</button>
+              <input type="text" value="3"></input>
+              <button>+</button>
+            </p>
+            <p className="item-price">2€</p>
+            <p>❌</p>
+          </li>
+          <li className="items">
+            <p className="item-name">Apple</p>
+            <p className="item-quantitiy">
+              <button>-</button>
+              <input type="text" value="2"></input>
+              <button>+</button>
+            </p>
+            <p className="item-price">1€</p>
+            <p>❌</p>
+          </li>
+        </ul>
+        <ul className="sum">
+          <li className="total">Total: €</li>
+          <li className="pdv-food">Food-Pdv: €</li>
+          <li className="pdv-drink">Drink-Pdv: €</li>
+          <li className="tip">Tip: €</li>
+        </ul>
+
+        <button>Print</button>
+      </div>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <div className="company info">
+      <p>Address: SomeStreet 12</p>
+      <p>City: SomeCity</p>
+    </div>
+  );
+}

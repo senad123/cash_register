@@ -1,13 +1,242 @@
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+}
+.main {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+.leftSide,
+.rightSide {
+  flex-basis: 35%;
+}
+.leftSide {
+  border-right: 1px solid #ccc;
+  padding-right: 20px;
+}
+.center {
+  flex-basis: 10%;
+}
+h2 {
+  margin-top: 0;
+}
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul li {
+  margin-bottom: 10px;
+}
+button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+th {
+  background-color: #f2f2f2;
+}
+.invoice-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-top: 20px;
+}
+.invoice-header {
+  margin-top: 0;
+}
+.invoice-total {
+  margin-top: 20px;
+}
+.invoice-total span {
+  display: block;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Styles for the container of all items */
+.all-items-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Styles for the input */
+.search-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+/* Styles for the list of items */
+.item-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Styles for each item card */
+.item-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.3s ease;
+}
+
+.item-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles for item name */
+.item-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Styles for item price */
+.item-price {
+  color: #007bff;
+  margin: 0;
+}
+
+/* Styles for the container of the invoice */
+.invoice-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Styles for the invoice header */
+.invoice-header {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Styles for the table of invoice items */
+.invoice-items {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.invoice-items th,
+.invoice-items td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.invoice-items th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Styles for the total section */
+.invoice-total {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Styles for the individual item rows */
+.invoice-item-row:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+/* Styles for the delete button */
+.delete-button {
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+}
+
+/* Styles for the selected item list */
+.selected-item-container {
+  margin-top: 20px;
+}
+
+.invoice-items {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-items th,
+.invoice-items td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.invoice-items th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.invoice-items td {
+  text-align: center;
+}
+
+.invoice-items input[type="number"] {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.invoice-items button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.invoice-items button:hover {
+  background-color: #0056b3;
+}
+
+.add-to-bill-btn {
+  display: block;
+  margin-top: 10px;
 }
