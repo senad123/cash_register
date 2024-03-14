@@ -45,6 +45,10 @@ export default function App() {
 
   //const [editItem, setEditItem] = useState(null);
 
+  function isItemAddedToBill(itemId) {
+    return billItem.some((item) => item.id === itemId);
+  }
+
   function handleSearch(e) {
     e.preventDefault();
     setSearchTerm(e.target.value);
@@ -67,6 +71,7 @@ export default function App() {
     setBillItem((prevBillItems) => [...prevBillItems, newItemObj]); //<-recived newItem
     setQuantity(1);
     setSelectedItem(null);
+
     setSearchTerm("");
   }
 
@@ -99,6 +104,7 @@ export default function App() {
             onSelection={handleSelectedItem}
             searchTerm={searchTerm}
             onSearch={handleSearch}
+            isItemAddedToBill={isItemAddedToBill}
           />
         </div>
         <div className="center">
@@ -135,7 +141,13 @@ export default function App() {
 function Nav() {
   return <h1>Navigation</h1>;
 }
-function AllItems({ allItems, onSelection, searchTerm, onSearch }) {
+function AllItems({
+  allItems,
+  onSelection,
+  searchTerm,
+  onSearch,
+  isItemAddedToBill,
+}) {
   const filteredItem = allItems.filter((item) =>
     item.itemName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
@@ -151,7 +163,12 @@ function AllItems({ allItems, onSelection, searchTerm, onSearch }) {
       />
       <ul className="item-list">
         {filteredItem.map((item) => (
-          <Item item={item} key={item.id} onSelection={onSelection} />
+          <Item
+            item={item}
+            key={item.id}
+            onSelection={onSelection}
+            disabled={isItemAddedToBill(item.id)}
+          />
         ))}
       </ul>
       {filteredItem < 1 && <AddNewItem searchTerm={searchTerm} />}
@@ -159,9 +176,12 @@ function AllItems({ allItems, onSelection, searchTerm, onSearch }) {
   );
 }
 
-function Item({ item, onSelection }) {
+function Item({ item, onSelection, disabled }) {
   return (
-    <li className="item-card" onClick={() => onSelection(item)}>
+    <li
+      className={`item-card ${disabled ? "disabled" : ""}`}
+      onClick={() => !disabled && onSelection(item)}
+    >
       <p className="item-name">{item.itemName}</p>
       <p className="item-price">{item.price}€</p>
     </li>
@@ -186,11 +206,6 @@ function SelectedItemList({
   setQuantity,
   onAddItemToBill,
 }) {
-  //   const newItem = selectedItem?.itemName;
-  //   const type = selectedItem?.type;
-  //   const price = selectedItem?.price;
-  //const [newItem, setNewItem] = useState(selectedItem?.itemName);
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -239,12 +254,6 @@ function SelectedItemList({
               <button className="add-to-bill-btn" onClick={handleSubmit}>
                 AddToBill
               </button>
-              <button
-                className="add-to-bill-btn"
-                onClick={() => onUpdateItem(selectedItem)}
-              >
-                update
-              </button>
             </td>
           </tr>
         </tbody>
@@ -278,7 +287,7 @@ function BillItems({
   return (
     <div className="invoice-container">
       <h2 className="invoice-header">Bill</h2>
-      <table className="invoice-items">
+      <table className="invoice-items" id="bill-table">
         <thead>
           <th>ItemName</th>
           <th>Quantity</th>
@@ -323,7 +332,7 @@ function BillItems({
   );
 }
 
-function BillItem({ item, onDeleteItem, onSelection, onUpdateItem }) {
+function BillItem({ item, onDeleteItem, onUpdateItem }) {
   const itemPrice = item.price * item.quantity;
 
   return (
@@ -340,7 +349,7 @@ function BillItem({ item, onDeleteItem, onSelection, onUpdateItem }) {
               size="7"
               value={item.quantity}
               onChange={(e) =>
-                onUpdateItem({ ...item, quantity: parseInt(e.target.value) })
+                onUpdateItem({ ...item, quantity: Number(e.target.value) })
               }
             ></input>
           </td>

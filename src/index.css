@@ -240,3 +240,7 @@ th {
   display: block;
   margin-top: 10px;
 }
+.item-card.disabled {
+  opacity: 0.5; /* or any other styling you want for disabled items */
+  cursor: not-allowed;
+}
